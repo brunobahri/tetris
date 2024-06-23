@@ -1,7 +1,7 @@
 #ifndef TETROMINO_H
 #define TETROMINO_H
 
-#define WIDTH 10
+#define WIDTH 15
 #define HEIGHT 20
 
 typedef struct {
@@ -11,10 +11,13 @@ typedef struct {
 
 extern Tetromino current;
 extern int board[HEIGHT][WIDTH];
+extern int delay;
+extern int dropDelay;
 
 void initTetromino();
 int canMove(int dx, int dy);
 void moveTetromino(int dx, int dy);
 void handleInput();
+void dropTetromino();
 
 #endif

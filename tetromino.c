@@ -3,6 +3,7 @@
 #include <time.h>
 #include <unistd.h>
 #include "tetromino.h"
+#include "input.h"
 
 Tetromino tetrominos[] = {
     {0, 0, {{1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // I
@@ -13,6 +14,8 @@ Tetromino tetrominos[] = {
 
 Tetromino current;
 int board[HEIGHT][WIDTH] = {0};
+extern int dropDelay;
+extern int delay;
 
 void initTetromino() {
     srand(time(NULL));
@@ -43,15 +46,8 @@ void moveTetromino(int dx, int dy) {
     }
 }
 
-void handleInput() {
-    char input;
-    if (read(STDIN_FILENO, &input, 1) != 1) return;
-    switch (input) {
-        case 'a':
-            moveTetromino(-1, 0);
-            break;
-        case 'd':
-            moveTetromino(1, 0);
-            break;
+void dropTetromino() {
+    while (canMove(0, 1)) {
+        moveTetromino(0, 1);
     }
 }
