@@ -9,7 +9,6 @@ Tetromino tetrominos[] = {
     {0, 0, {{1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // I
     {0, 0, {{1, 1, 1, 0}, {0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // T
     {0, 0, {{1, 1, 0, 0}, {1, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // O
-    // Adicione as outras peças (L, J, S, Z)
 };
 
 Tetromino current;
@@ -20,7 +19,7 @@ extern int fastDrop;
 
 void initTetromino() {
     srand(time(NULL));
-    current = tetrominos[rand() % 3]; // Temporariamente usando apenas 3 peças
+    current = tetrominos[rand() % 3]; 
     current.x = WIDTH / 2 - 2;
     current.y = 0;
 }
