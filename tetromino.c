@@ -16,6 +16,7 @@ Tetromino current;
 int board[HEIGHT][WIDTH] = {0};
 extern int dropDelay;
 extern int delay;
+extern int fastDrop;
 
 void initTetromino() {
     srand(time(NULL));
@@ -49,5 +50,27 @@ void moveTetromino(int dx, int dy) {
 void dropTetromino() {
     while (canMove(0, 1)) {
         moveTetromino(0, 1);
+    }
+}
+
+void clearFullLines() {
+    for (int i = 0; i < HEIGHT; i++) {
+        int full = 1;
+        for (int j = 0; j < WIDTH; j++) {
+            if (!board[i][j]) {
+                full = 0;
+                break;
+            }
+        }
+        if (full) {
+            for (int k = i; k > 0; k--) {
+                for (int j = 0; j < WIDTH; j++) {
+                    board[k][j] = board[k - 1][j];
+                }
+            }
+            for (int j = 0; j < WIDTH; j++) {
+                board[0][j] = 0;
+            }
+        }
     }
 }
