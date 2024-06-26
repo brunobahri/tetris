@@ -8,9 +8,9 @@
 #include "board.h"
 #include "input.h"
 
-int delay = 500000; // 0.5 segundos
-int dropDelay = 500000; // Inicialmente, o delay é o mesmo
-int fastDrop = 0; // Flag para controlar a descida rápida
+int delay = 500000; 
+int dropDelay = 500000; 
+int fastDrop = 0; 
 
 void setTerminalMode(struct termios *oldt, struct termios *newt) {
     tcgetattr(STDIN_FILENO, oldt);
@@ -49,7 +49,6 @@ int main() {
             if (canMove(0, 1)) {
                 moveTetromino(0, 1);
             } else {
-                // Adicionar a peça ao tabuleiro e iniciar uma nova peça
                 for (int i = 0; i < 4; i++) {
                     for (int j = 0; j < 4; j++) {
                         if (current.shape[i][j]) {
@@ -64,7 +63,7 @@ int main() {
         }
 
         drawBoard();
-        usleep(100000); // Pequeno atraso para limitar o loop
+        usleep(100000); 
     }
 
     resetTerminalMode(&oldt);
