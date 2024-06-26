@@ -5,7 +5,7 @@
 #include "tetromino.h"
 
 void drawBoard() {
-    system("clear"); // ou "cls" no Windows
+    system("clear"); 
     int display[HEIGHT][WIDTH];
     memcpy(display, board, sizeof(board));
 
