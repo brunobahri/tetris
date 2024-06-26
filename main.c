@@ -57,6 +57,7 @@ int main() {
                         }
                     }
                 }
+                clearFullLines();
                 initTetromino();
             }
             lastTime = currentTime;
