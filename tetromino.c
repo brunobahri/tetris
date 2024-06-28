@@ -9,6 +9,7 @@ Tetromino tetrominos[] = {
     {0, 0, {{1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // I
     {0, 0, {{1, 1, 1, 0}, {0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // T
     {0, 0, {{1, 1, 0, 0}, {1, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // O
+    // Adicione as outras peças (L, J, S, Z)
 };
 
 Tetromino current;
@@ -19,7 +20,7 @@ extern int fastDrop;
 
 void initTetromino() {
     srand(time(NULL));
-    current = tetrominos[rand() % 3]; 
+    current = tetrominos[rand() % 3]; // Temporariamente usando apenas 3 peças
     current.x = WIDTH / 2 - 2;
     current.y = 0;
 }
@@ -43,6 +44,18 @@ void moveTetromino(int dx, int dy) {
     if (canMove(dx, dy)) {
         current.x += dx;
         current.y += dy;
+    }
+}
+
+void rotateTetromino() {
+    Tetromino temp = current;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            temp.shape[j][3 - i] = current.shape[i][j];
+        }
+    }
+    if (canMove(0, 0)) {
+        current = temp;
     }
 }
 
