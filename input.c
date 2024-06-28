@@ -24,14 +24,17 @@ void handleInput() {
             case 'd':
                 moveTetromino(1, 0);
                 break;
+            case 'w':
+                rotateTetromino();
+                break;
             case 's':
-                fastDrop = 1; 
+                fastDrop = 1; // Acelera a queda
                 break;
             case 'q':
-                fastDrop = 0; 
+                fastDrop = 0; // Restaura a velocidade normal
                 break;
         }
     } else {
-        fastDrop = 0;
+        fastDrop = 0; // Restaura a velocidade normal se nenhuma tecla estiver pressionada
     }
 }
