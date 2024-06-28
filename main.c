@@ -4,13 +4,15 @@
 #include <unistd.h>
 #include <termios.h>
 #include <sys/time.h>
+#include <string.h> // Incluir o cabeçalho para memcpy
 #include "tetromino.h"
 #include "board.h"
 #include "input.h"
 
-int delay = 500000; 
-int dropDelay = 500000; 
-int fastDrop = 0; 
+int delay = 500000; // 0.5 segundos
+int dropDelay = 500000; // Inicialmente, o delay é o mesmo
+int fastDrop = 0; // Flag para controlar a descida rápida
+int score = 0; // Variável de pontuação
 
 void setTerminalMode(struct termios *oldt, struct termios *newt) {
     tcgetattr(STDIN_FILENO, oldt);
@@ -20,7 +22,34 @@ void setTerminalMode(struct termios *oldt, struct termios *newt) {
 }
 
 void resetTerminalMode(struct termios *oldt) {
-    tcsetattr(STDIN_FILENO, TCSANOW, oldt);
+    tcsetattr(STDIN_FILENO, TCSANOW, oldt); // Corrigir erro de digitação aqui
+}
+
+void drawBoardWithScore() {
+    system("clear");
+    printf("Score: %d\n\n", score); // Exibir pontuação no topo
+
+    int display[HEIGHT][WIDTH];
+    memcpy(display, board, sizeof(board));
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (current.shape[i][j]) {
+                display[current.y + i][current.x + j] = current.shape[i][j];
+            }
+        }
+    }
+
+    for (int i = 0; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
+            if (display[i][j]) {
+                printf("#");
+            } else {
+                printf(".");
+            }
+        }
+        printf("\n");
+    }
 }
 
 int main() {
@@ -49,6 +78,7 @@ int main() {
             if (canMove(0, 1)) {
                 moveTetromino(0, 1);
             } else {
+                // Adicionar a peça ao tabuleiro e iniciar uma nova peça
                 for (int i = 0; i < 4; i++) {
                     for (int j = 0; j < 4; j++) {
                         if (current.shape[i][j]) {
@@ -62,8 +92,8 @@ int main() {
             lastTime = currentTime;
         }
 
-        drawBoard();
-        usleep(100000); 
+        drawBoardWithScore();
+        usleep(100000); // Pequeno atraso para limitar o loop
     }
 
     resetTerminalMode(&oldt);
