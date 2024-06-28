@@ -17,6 +17,7 @@ int board[HEIGHT][WIDTH] = {0};
 extern int dropDelay;
 extern int delay;
 extern int fastDrop;
+extern int score;
 
 void initTetromino() {
     srand(time(NULL));
@@ -75,6 +76,7 @@ void clearFullLines() {
             }
         }
         if (full) {
+            score += 10;
             for (int k = i; k > 0; k--) {
                 for (int j = 0; j < WIDTH; j++) {
                     board[k][j] = board[k - 1][j];
