@@ -18,6 +18,7 @@ extern int fastDrop;
 void initTetromino();
 int canMove(int dx, int dy);
 void moveTetromino(int dx, int dy);
+void rotateTetromino();
 void handleInput();
 void dropTetromino();
 void clearFullLines();
