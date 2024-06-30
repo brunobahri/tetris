@@ -92,6 +92,8 @@ int main() {
     struct termios oldt, newt;
     setTerminalMode(&oldt, &newt);
 
+    srand(time(NULL)); // Configurar a semente aleatória
+
     initTetromino();
 
     struct timespec lastTime, currentTime;
