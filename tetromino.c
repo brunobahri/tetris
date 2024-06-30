@@ -9,7 +9,10 @@ Tetromino tetrominos[] = {
     {0, 0, {{1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // I
     {0, 0, {{1, 1, 1, 0}, {0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // T
     {0, 0, {{1, 1, 0, 0}, {1, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // O
-    // Adicione as outras peças (L, J, S, Z)
+    {0, 0, {{1, 1, 0, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // Z
+    {0, 0, {{0, 1, 1, 0}, {1, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // S
+    {0, 0, {{1, 1, 1, 0}, {1, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // L
+    {0, 0, {{1, 1, 1, 0}, {0, 0, 1, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}}, // J
 };
 
 Tetromino current;
@@ -20,8 +23,7 @@ extern int fastDrop;
 extern int score;
 
 void initTetromino() {
-    srand(time(NULL));
-    current = tetrominos[rand() % 3]; // Temporariamente usando apenas 3 peças
+    current = tetrominos[rand() % 7]; // Usando todas as 7 peças
     current.x = WIDTH / 2 - 2;
     current.y = 0;
 }
