@@ -3,11 +3,14 @@
 #include <time.h>
 #include <unistd.h>
 #include <termios.h>
+#include <sys/ioctl.h>
 #include <sys/time.h>
-#include <string.h> // Incluir o cabeçalho para memcpy
+#include <string.h>
 #include "tetromino.h"
 #include "board.h"
 #include "input.h"
+
+#define BUFFER_SIZE 1024*1024
 
 int delay = 500000; // 0.5 segundos
 int dropDelay = 500000; // Inicialmente, o delay é o mesmo
@@ -22,13 +25,35 @@ void setTerminalMode(struct termios *oldt, struct termios *newt) {
 }
 
 void resetTerminalMode(struct termios *oldt) {
-    tcsetattr(STDIN_FILENO, TCSANOW, oldt); // Corrigir erro de digitação aqui
+    tcsetattr(STDIN_FILENO, TCSANOW, oldt);
 }
 
 void drawBoardWithScore() {
-    system("clear");
-    printf("Score: %d\n\n", score); // Exibir pontuação no topo
+    char buffer[BUFFER_SIZE];
+    int offset = 0;
 
+    // Obtendo o tamanho do terminal
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+
+    int terminalWidth = w.ws_col;
+    int terminalHeight = w.ws_row;
+
+    // Calculando a posição centralizada
+    int startX = (terminalWidth - WIDTH - 2) / 2; // -2 para incluir as bordas laterais
+    int startY = (terminalHeight - HEIGHT - 3) / 2; // -3 para incluir a linha do score e as bordas superior e inferior
+
+    // Desenhando o score no topo
+    offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "\033[%d;%dHScore: %d", startY, startX + 2, score);
+
+    // Desenhando a borda superior
+    offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "\033[%d;%dH+", startY + 1, startX);
+    for (int i = 0; i < WIDTH; i++) {
+        offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "-");
+    }
+    offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "+");
+
+    // Desenhando o tabuleiro com a peça em movimento e as bordas laterais
     int display[HEIGHT][WIDTH];
     memcpy(display, board, sizeof(board));
 
@@ -41,15 +66,26 @@ void drawBoardWithScore() {
     }
 
     for (int i = 0; i < HEIGHT; i++) {
+        offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "\033[%d;%dH|", startY + 2 + i, startX);
         for (int j = 0; j < WIDTH; j++) {
             if (display[i][j]) {
-                printf("#");
+                offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "#");
             } else {
-                printf(".");
+                offset += snprintf(buffer + offset, BUFFER_SIZE - offset, ".");
             }
         }
-        printf("\n");
+        offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "|");
     }
+
+    // Desenhando a borda inferior
+    offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "\033[%d;%dH+", startY + 2 + HEIGHT, startX);
+    for (int i = 0; i < WIDTH; i++) {
+        offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "-");
+    }
+    offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "+");
+
+    // Escrevendo o buffer inteiro na tela de uma vez
+    write(STDOUT_FILENO, buffer, offset);
 }
 
 int main() {
