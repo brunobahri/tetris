@@ -14,6 +14,7 @@ extern int board[HEIGHT][WIDTH];
 extern int delay;
 extern int dropDelay;
 extern int fastDrop;
+extern int score;
 
 void initTetromino();
 int canMove(int dx, int dy);
