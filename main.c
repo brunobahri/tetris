@@ -77,7 +77,7 @@ void drawBoardWithScore() {
         offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "|");
     }
 
-    // Desenhando a borda inferior
+
     offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "\033[%d;%dH+", startY + 2 + HEIGHT, startX);
     for (int i = 0; i < WIDTH; i++) {
         offset += snprintf(buffer + offset, BUFFER_SIZE - offset, "-");
@@ -92,7 +92,7 @@ int main() {
     struct termios oldt, newt;
     setTerminalMode(&oldt, &newt);
 
-    srand(time(NULL)); // Configurar a semente aleatória
+    srand(time(NULL)); 
 
     initTetromino();
 
