@@ -1,4 +1,4 @@
 # TETRIS  
 
-Recriação do jogo tetris. 
+Recriação do jogo tetris em C 
 
