@@ -23,7 +23,7 @@ extern int fastDrop;
 extern int score;
 
 void initTetromino() {
-    current = tetrominos[rand() % 7]; // Usando todas as 7 peças
+    current = tetrominos[rand() % 7]; 
     current.x = WIDTH / 2 - 2;
     current.y = 0;
 }
