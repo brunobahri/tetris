@@ -28,13 +28,13 @@ void handleInput() {
                 rotateTetromino();
                 break;
             case 's':
-                fastDrop = 1; // Acelera a queda
+                fastDrop = 1; 
                 break;
             case 'q':
-                fastDrop = 0; // Restaura a velocidade normal
+                fastDrop = 0; 
                 break;
         }
     } else {
-        fastDrop = 0; // Restaura a velocidade normal se nenhuma tecla estiver pressionada
+        fastDrop = 0; 
     }
 }
