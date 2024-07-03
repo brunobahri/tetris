@@ -12,10 +12,10 @@
 
 #define BUFFER_SIZE 1024*1024
 
-int delay = 500000; // 0.5 segundos
-int dropDelay = 500000; // Inicialmente, o delay é o mesmo
-int fastDrop = 0; // Flag para controlar a descida rápida
-int score = 0; // Variável de pontuação
+int delay = 500000; 
+int dropDelay = 500000; 
+int fastDrop = 0; 
+int score = 0; 
 
 void setTerminalMode(struct termios *oldt, struct termios *newt) {
     tcgetattr(STDIN_FILENO, oldt);
