@@ -3,8 +3,7 @@
 #include "input.h"
 #include "tetromino.h"
 
-extern int fastDrop; // Declaração externa para acessar a variável global
-
+extern int fastDrop; 
 int kbhit() {
     struct timeval tv = { 0L, 0L };
     fd_set fds;
