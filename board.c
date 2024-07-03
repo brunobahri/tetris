@@ -8,7 +8,6 @@ void drawBoard() {
     system("clear"); 
     int display[HEIGHT][WIDTH];
     memcpy(display, board, sizeof(board));
-
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             if (current.shape[i][j]) {
