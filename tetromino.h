@@ -1,6 +1,5 @@
 #ifndef TETROMINO_H
 #define TETROMINO_H
-
 #define WIDTH 16
 #define HEIGHT 20
 
